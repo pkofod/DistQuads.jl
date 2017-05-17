@@ -2,7 +2,7 @@ module DistQuads # DistQuads
 
 using Distributions,
       RCall
-
+export DistQuad, E
 # FIXME Should install statmod via build!
 R"library(statmod)"
 
