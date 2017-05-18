@@ -1,5 +1,6 @@
 using RCall
 try
+    R"options(repos=structure(c(CRAN=\"https://cloud.r-project.org/\")))"
     R"""pkgTest <- function(x)
       {
         if (!require(x,character.only = TRUE))
@@ -12,5 +13,5 @@ try
     R"did_it_work <- \"statmod\" %in% loadedNamespaces()"
     @assert @rget did_it_work
 catch m
-    err("statmod was not installed, build.jl has failed to set up DistQuads.jl. Please report this to the issue tracker https://github.com/pkofod/DistQuads.jl/issues")
+    error("statmod was not installed, build.jl has failed to set up DistQuads.jl. Please report this to the issue tracker https://github.com/pkofod/DistQuads.jl/issues")
 end
