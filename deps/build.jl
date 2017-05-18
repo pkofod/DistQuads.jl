@@ -1,9 +1,9 @@
 using RCall
 try
-    R"options(repos=structure(c(CRAN=\"https://cloud.r-project.org/\", quiet = TRUE)))"
+    R"options(repos=structure(c(CRAN=\"https://cloud.r-project.org/\")))"
     R"""pkgTest <- function(x)
       {
-        if (!require(x,character.only = TRUE))
+        if (!require(x,character.only = TRUE, quiet = TRUE))
         {
           install.packages(x,dep=TRUE)
             if(!require(x,character.only = TRUE)) stop(\"Package not found\")
