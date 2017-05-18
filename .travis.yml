@@ -23,12 +23,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://cran.rstudio.com/bin/macosx/ -r --level=1 --accept-regex "R-[0-9.]*.pkg" -nd; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg R-*.pkg -target /; fi
 
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-install:
-  - ./travis-tool.sh install_deps
-  - ./travis-tool.sh install_r statmod
 # uncomment the following lines to override the default test script
 #script:
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi

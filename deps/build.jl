@@ -1,6 +1,6 @@
 using RCall
 try
-    R"options(repos=structure(c(CRAN=\"https://cloud.r-project.org/\")))"
+    R"options(repos=structure(c(CRAN=\"https://cloud.r-project.org/\", quiet = TRUE)))"
     R"""pkgTest <- function(x)
       {
         if (!require(x,character.only = TRUE))
