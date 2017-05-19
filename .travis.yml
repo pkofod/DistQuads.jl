@@ -21,7 +21,7 @@ before_install:
   # faster than using homebrew/science tap
   # but no permalink to release download
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://cran.rstudio.com/bin/macosx/ -r --level=1 --accept-regex "R-[0-9.]*.pkg" -nd; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg ./R-*.pkg -target /; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg 'R-*.pkg' -target /; fi
 # # install statmod
   - wget https://cran.r-project.org/src/contrib/statmod_1.4.29.tar.gz
   - sudo R CMD INSTALL statmod_1.4.29.tar.gz
