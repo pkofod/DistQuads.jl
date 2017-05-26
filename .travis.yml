@@ -4,7 +4,8 @@ os:
   - linux
 #  - osx
 julia:
-  - release
+  - 0.5
+  - 0.6
   - nightly
 notifications:
   email: false
@@ -23,8 +24,8 @@ before_install:
  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://cran.rstudio.com/bin/macosx/ -r --level=1 --accept-regex "R-[0-9.]*.pkg" -nd; fi
  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg R-*.pkg -target /; fi
 # # install statmod
-  - wget https://cran.r-project.org/src/contrib/statmod_1.4.29.tar.gz
-  - sudo R CMD INSTALL statmod_1.4.29.tar.gz
+#  - wget https://cran.r-project.org/src/contrib/statmod_1.4.29.tar.gz
+#  - sudo R CMD INSTALL statmod_1.4.29.tar.gz
 # uncomment the following lines to override the default test script
 #script:
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
