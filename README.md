@@ -15,12 +15,7 @@ N values, often called nodes, useing so-called Gaussian quadrature.
 
 This package builds on top of the Distributions.jl package, and it provides a simple
 interface to generate Guassian quadrature weights and nodes for numerical integration
-as explained above. The theory is well-developed, and a Julia implementation is
-certainly more than possible, but currently this package uses RCall to make calls
-to the statmod library.
-
-Note, that `using DistQuads` will start an R process in the background,
-due to a `library(statmod)` call via RCall.
+as explained above.
 
 ```julia
 julia> using Distributions, DistQuads

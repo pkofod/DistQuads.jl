@@ -1,17 +1,15 @@
 module DistQuads # DistQuads
 
-using RCall,
-      Reexport
+using Reexport,
+      FastGaussQuadrature
 @reexport using Distributions
 export DistQuad, E, mean, var
 import Base: mean, var
-# FIXME Should install statmod via build!
-R"library(statmod)"
 
-type DistQuad
+type DistQuad{D}
     x
     w
-    d
+    d::D
 end
 nodes(dq::DistQuad) = dq.x
 weights(dq::DistQuad) = dq.w
@@ -19,27 +17,41 @@ distribution(dq::DistQuad) = dq.d
 
 DistQuad(d; N = 32) = DistQuad(d, N)
 function DistQuad(d::Distributions.Beta, N)
-    R"nodesweight<-gauss.quad.prob($N, dist=\"beta\", alpha=$(d.α), beta=$(d.β))"
-    nw = @rget nodesweight
-    DistQuad(nw[:nodes], nw[:weights], d)
+    gj = gaussjacobi(N, d.α-1, d.β-1)
+    G = gamma(d.α)*gamma(d.β)/gamma(d.α+d.β)
+    w = gj[2]/((2.0^(d.α+d.β-1.0))*G)
+    n = (1.-gj[1])./2
+    DistQuad(n, w, d)
+end
+
+function DistQuad(d::Distributions.Exponential, N)
+    gl = gausslaguerre(N)
+    w = gl[2]
+    n = gl[1]./d.θ
+    DistQuad(n, w, d)
 end
 
 function DistQuad(d::Distributions.Gamma, N)
-    R"nodesweight<-gauss.quad.prob($N, dist=\"gamma\", alpha=$(d.α), beta=$(d.θ))"
-    nw = @rget nodesweight
-    DistQuad(nw[:nodes], nw[:weights], d)
+    gl = gausslaguerre(N, d.α-1)
+    n = gl[1].*d.θ
+    w = gl[2]./gamma(d.α)
+    DistQuad(n, w, d)
 end
 
+function _DistQuad_Normal_kernel(d, N)
+    gh = gausshermite(N)
+    w = gh[2]./sqrt(pi)
+    n = gh[1].*sqrt(2).*d.σ.+d.μ
+    n, w
+end
 function DistQuad(d::Distributions.Normal, N)
-    R"nodesweight<-gauss.quad.prob($N, dist=\"normal\", mu=$(d.μ), sigma=$(d.σ))"
-    nw = @rget nodesweight
-    DistQuad(nw[:nodes], nw[:weights], d)
+    n, w = _DistQuad_Normal_kernel(d, N)
+    DistQuad(n, w, d)
 end
 
 function DistQuad(d::Distributions.LogNormal, N)
-    R"nodesweight<-gauss.quad.prob($N, dist=\"normal\", mu=$(d.μ), sigma=$(d.σ))"
-    nw = @rget nodesweight
-    DistQuad(exp.(nw[:nodes]), nw[:weights], d)
+    n, w = _DistQuad_Normal_kernel(d, N)
+    DistQuad(exp.(n), w, d)
 end
 
 

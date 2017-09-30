@@ -4,27 +4,16 @@ os:
   - linux
 #  - osx
 julia:
-  - release
+  - 0.6
   - nightly
+matrix:
+  allow_failures:
+  - julia: nightly
 notifications:
   email: false
 
 # taken from RCall's travis.yml
 before_install:
-  # linux
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y "deb http://cran.rstudio.com/bin/linux/ubuntu $(lsb_release -s -c)/"; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -qq -y; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install git r-base r-base-dev r-recommended -y; fi
-
-  # osx
-  # faster than using homebrew/science tap
-  # but no permalink to release download
- # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget https://cran.rstudio.com/bin/macosx/ -r --level=1 --accept-regex "R-[0-9.]*.pkg" -nd; fi
- # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo installer -pkg R-*.pkg -target /; fi
-# # install statmod
-  - wget https://cran.r-project.org/src/contrib/statmod_1.4.29.tar.gz
-  - sudo R CMD INSTALL statmod_1.4.29.tar.gz
 # uncomment the following lines to override the default test script
 #script:
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
