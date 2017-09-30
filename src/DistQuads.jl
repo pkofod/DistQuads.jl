@@ -17,7 +17,7 @@ distribution(dq::DistQuad) = dq.d
 
 DistQuad(d; N = 32) = DistQuad(d, N)
 function DistQuad(d::Distributions.Beta, N)
-    gj = gaussjacobi(N, d.α-1, d.β-1)
+    gj = gaussjacobi(Int64(N), d.α-1, d.β-1)
     G = gamma(d.α)*gamma(d.β)/gamma(d.α+d.β)
     w = gj[2]/((2.0^(d.α+d.β-1.0))*G)
     n = (1.-gj[1])./2
@@ -25,14 +25,14 @@ function DistQuad(d::Distributions.Beta, N)
 end
 
 function DistQuad(d::Distributions.Exponential, N)
-    gl = gausslaguerre(N)
+    gl = gausslaguerre(Int64(N))
     w = gl[2]
     n = gl[1]./d.θ
     DistQuad(n, w, d)
 end
 
 function DistQuad(d::Distributions.Gamma, N)
-    gl = gausslaguerre(N, d.α-1)
+    gl = gausslaguerre(Int64(N), d.α-1)
     n = gl[1].*d.θ
     w = gl[2]./gamma(d.α)
     DistQuad(n, w, d)
