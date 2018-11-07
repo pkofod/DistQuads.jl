@@ -4,7 +4,7 @@ using Reexport,
       FastGaussQuadrature
 @reexport using Distributions
 export DistQuad, E, mean, var
-import Base: mean, var
+import Statistics: mean, var
 
 struct DistQuad{D}
     x
