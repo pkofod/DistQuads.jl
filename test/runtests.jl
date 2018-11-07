@@ -1,5 +1,5 @@
 using DistQuads, Distributions
-using Base.Test
+using Test
 
 
 @testset "analytic vs quadrature" begin
