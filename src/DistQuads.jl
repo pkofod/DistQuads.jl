@@ -6,7 +6,7 @@ using Reexport,
 export DistQuad, E, mean, var
 import Base: mean, var
 
-type DistQuad{D}
+struct DistQuad{D}
     x
     w
     d::D
