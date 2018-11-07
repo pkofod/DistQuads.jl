@@ -5,6 +5,8 @@ using Reexport,
 @reexport using Distributions
 export DistQuad, E, mean, var
 import Statistics: mean, var
+import LinearAlgebra: dot
+import SpecialFunctions: gamma
 
 struct DistQuad{D}
     x
