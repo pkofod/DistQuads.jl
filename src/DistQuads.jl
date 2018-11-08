@@ -4,9 +4,11 @@ using Reexport,
       FastGaussQuadrature
 @reexport using Distributions
 export DistQuad, E, mean, var
-import Base: mean, var
+import Statistics: mean, var
+import LinearAlgebra: dot
+import SpecialFunctions: gamma
 
-type DistQuad{D}
+struct DistQuad{D}
     x
     w
     d::D
@@ -19,8 +21,8 @@ DistQuad(d; N = 32) = DistQuad(d, N)
 function DistQuad(d::Distributions.Beta, N)
     gj = FastGaussQuadrature.JacobiRec(N, d.α-1, d.β-1)
     G = gamma(d.α)*gamma(d.β)/gamma(d.α+d.β)
-    w = gj[2]/((2.0^(d.α+d.β-1.0))*G)
-    n = (1.-gj[1])./2
+    w = gj[2]/((2.0^(d.α+d.β - 1.0))*G)
+    n = (1 .- gj[1])./2
     DistQuad(n, w, d)
 end
 

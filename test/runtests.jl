@@ -1,6 +1,6 @@
 using DistQuads, Distributions
-using Base.Test
-
+using Test
+import LinearAlgebra: norm
 
 @testset "analytic vs quadrature" begin
     @testset "Beta" begin
